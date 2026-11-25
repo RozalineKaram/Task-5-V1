@@ -11,7 +11,6 @@ const instructorSearchSchema = Joi.object({
 }).unknown(false);
 function publicProfile(doc) {
   return {
-    id: doc._id.toString(),
     name: doc.name,
     username: doc.username,
     department: doc.department,
