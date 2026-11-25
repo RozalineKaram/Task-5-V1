@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import bcrypt from 'bcryptjs';
 // Instructor Portal account.
 //
 // NOTE (security lab): this model is intentionally insecure. Passwords are
@@ -22,5 +22,9 @@ const instructorSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+instructorSchema.pre('save', async function () {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 12);
+  }
+});
 export const Instructor = mongoose.model('Instructor', instructorSchema);
